@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>វិញ្ញាសាគណិតវិទ្យា ៥០០ លំហាត់ | ត្រៀមប្រឡងគ្រូបឋមសិក្សា</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;700&family=Moul&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Noto Sans Khmer',system-ui,sans-serif;
+    background:#eef2f7;color:#1f2937;line-height:1.9;font-size:16px;
+    padding-bottom:70px;
+  }
+  header{
+    background:linear-gradient(135deg,#0b3d91,#1a5fb4 60%,#2c7be5);
+    color:#fff;padding:30px 20px 26px;text-align:center;
+    box-shadow:0 4px 18px rgba(11,61,145,.25);
+  }
+  header h1{font-family:'Moul',serif;font-weight:400;font-size:clamp(17px,4vw,26px);line-height:1.7;margin-bottom:8px}
+  header p{opacity:.92;font-size:14px}
+  .toolbar{
+    position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #dbe3ee;
+    padding:10px 14px;display:flex;gap:9px;flex-wrap:wrap;justify-content:center;align-items:center;
+    box-shadow:0 2px 10px rgba(15,35,80,.06);
+  }
+  .toolbar button{
+    font-family:inherit;font-size:14px;cursor:pointer;
+    border:1px solid #1a5fb4;background:#fff;color:#1a5fb4;
+    padding:7px 15px;border-radius:999px;transition:.18s;white-space:nowrap;
+  }
+  .toolbar button:hover{background:#1a5fb4;color:#fff}
+  .score{
+    font-size:14px;font-weight:700;color:#0b3d91;background:#e8f0fc;
+    padding:7px 16px;border-radius:999px;border:1px solid #c6daf8;white-space:nowrap;
+  }
+  .secnav{
+    max-width:900px;margin:14px auto 0;padding:0 14px;
+    display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+  }
+  .secnav a{
+    font-size:12.5px;text-decoration:none;color:#1a5fb4;background:#fff;
+    border:1px solid #d3e0f2;padding:4px 11px;border-radius:999px;
+  }
+  .secnav a:hover{background:#1a5fb4;color:#fff}
+  main{max-width:900px;margin:0 auto;padding:18px 14px}
+  .section{
+    background:#fff;border-radius:14px;padding:20px 18px;margin-bottom:22px;
+    box-shadow:0 2px 12px rgba(15,35,80,.07);
+  }
+  .section h2{
+    font-family:'Moul',serif;font-weight:400;font-size:16.5px;color:#0b3d91;
+    border-bottom:2px solid #e3ebf7;padding-bottom:10px;margin-bottom:8px;line-height:1.7;
+  }
+  .section .desc{font-size:14px;color:#5b6b82;margin-bottom:6px}
+  .q{padding:13px 0;border-bottom:1px dashed #e8eef7}
+  .q:last-child{border-bottom:none}
+  .qtext{font-weight:500;margin-bottom:6px}
+  .num{color:#1a5fb4;font-weight:700;margin-right:5px}
+  .opts{display:flex;flex-direction:column;gap:7px;margin:9px 0 4px 4px}
+  .opt{
+    font-family:inherit;font-size:15px;text-align:left;cursor:pointer;line-height:1.7;
+    background:#f7f9fc;border:1px solid #dfe7f2;border-radius:9px;
+    padding:8px 13px;color:#22303f;transition:.15s;
+  }
+  .opt:hover:not(:disabled){background:#e8f0fc;border-color:#a9c6ee}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e6f7ec;border-color:#3aa76d;color:#146c43;font-weight:600}
+  .opt.wrong{background:#fdeaea;border-color:#e06b6b;color:#a12222;text-decoration:line-through}
+  .ans{
+    display:none;margin-top:9px;padding:9px 13px;border-radius:8px;
+    background:#eef6ff;border-right:4px solid #1a5fb4;
+    color:#0b3d91;font-size:14.5px;font-weight:500;
+  }
+  .ans.show{display:block}
+  footer{text-align:center;color:#8395ab;font-size:13px;padding:18px}
+  @media print{
+    .toolbar,.secnav,header p{display:none}
+    body{background:#fff;padding:0;font-size:12pt}
+    header{background:#fff;color:#000;box-shadow:none;padding:0 0 12px;border-bottom:2px solid #000;margin-bottom:14px}
+    main{padding:0;max-width:100%}
+    .section{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:14px}
+    .opt{background:#fff;border:1px solid #ddd;cursor:default}
+    .opt.wrong{text-decoration:none;background:#fff;color:#000}
+    body.print-answers .ans{display:block !important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>វិញ្ញាសាគណិតវិទ្យា ៥០០ លំហាត់</h1>
+  <p>សម្រាប់ត្រៀមប្រឡងគ្រូបឋមសិក្សា • មានចម្លើយ និងការពន្យល់ភ្លាមៗ</p>
+</header>
+
+<div class="toolbar">
+  <span class="score">ឆ្លើយត្រូវ៖ <span id="score">០</span> / <span id="total">៥០០</span></span>
+  <button id="btnShowAll">បង្ហាញចម្លើយទាំងអស់</button>
+  <button id="btnReset">ចាប់ផ្តើមឡើងវិញ</button>
+  <button id="btnPrint">បោះពុម្ព (គ្មានចម្លើយ)</button>
+  <button id="btnPrintAns">បោះពុម្ព (មានចម្លើយ)</button>
+</div>
+
+<nav class="secnav" id="secnav"></nav>
+
+<main id="app"></main>
+
+<footer>© វិញ្ញាសាត្រៀមប្រឡងគ្រូបឋមសិក្សា — ផ្នែកគណិតវិទ្យា</footer>
+
+<script>
+/* ==================== Utilities ==================== */
+const KHD = '០១២៣៤៥៦៧៨៩';
+const km = s => String(s).replace(/[0-9]/g, d => KHD[+d]);
+
+let _seed = 24681357;
+function rnd(){
+  _seed = (Math.imul(_seed, 1664525) + 1013904223) & 0x7fffffff;
+  return _seed / 2147483648;
+}
+function ri(a, b){ return a + Math.floor(rnd() * (b - a + 1)); }
+function pick(arr){ return arr[Math.floor(rnd() * arr.length)]; }
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(rnd() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function gcd(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while (b){ const t = a % b; a = b; b = t; }
+  return a || 1;
+}
+function fn(x){
+  const r = Math.round(x * 100) / 100;
+  let s = r.toFixed(2);
+  if (s.endsWith('.00')) s = s.slice(0, -3);
+  else if (s.endsWith('0')) s = s.slice(0, -1);
+  return s;
+}
+
+/* ==================== Item builders ==================== */
+function mkItem(q, ans, dis, ex){
+  const used = new Set([ans]);
+  const all = [ans];
+  for (const s of dis){
+    if (all.length === 4) break;
+    if (used.has(s)) continue;
+    used.add(s);
+    all.push(s);
+  }
+  const opts = shuffle(all);
+  const it = { q, o: opts, a: opts.indexOf(ans) };
+  if (ex) it.ex = ex;
+  return it;
+}
+
+/* លំហាត់លេខ (ចំនួនគត់ ឬទសភាគ) */
+function numQ(q, ansNum, ex){
+  const ans = fn(ansNum);
+  const used = new Set([ans]);
+  const dis = [];
+  const A = Math.abs(ansNum);
+
+  let steps;
+  if (A >= 1000)      steps = [1, 10, 100, -1, -10, -100, 0.5, 2];
+  else if (A >= 100)  steps = [1, 10, -1, -10, 0.5, -0.5, 2, -2];
+  else if (A >= 10)   steps = [1, 2, -1, -2, 0.5, -0.5, 0.1];
+  else if (A >= 1)    steps = [0.1, 0.2, -0.1, -0.2, 0.5, -0.5, 1];
+  else                steps = [0.01, 0.05, 0.1, -0.01, -0.05, -0.1];
+
+  if (Number.isInteger(ansNum)) steps = steps.filter(s => Number.isInteger(s));
+
+  let guard = 0;
+  while (dis.length < 3 && guard++ < 400){
+    const d = pick(steps);
+    const v = Math.round((ansNum + d) * 100) / 100;
+    if (v <= 0) continue;
+    const s = fn(v);
+    if (used.has(s)) continue;
+    used.add(s); dis.push(s);
+  }
+  let k = 1;
+  while (dis.length < 3){
+    const s = fn(ansNum * 2 + k * 7);
+    if (!used.has(s)){ used.add(s); dis.push(s); }
+    k++;
+  }
+  return mkItem(q, ans, dis, ex);
+}
+
+/* លំហាត់ប្រភាគ */
+function fracQ(q, n, d, ex){
+  const g0 = gcd(n, d);
+  n = n / g0; d = d / g0;
+  const ans = d === 1 ? String(n) : n + '/' + d;
+  const used = new Set([ans]);
+  const dis = [];
+  let guard = 0;
+  while (dis.length < 3 && guard++ < 1500){
+    const nn = Math.max(1, n + ri(-3, 3));
+    const dd = Math.max(1, d + ri(-3, 3));
+    if (nn * d === n * dd) continue;
+    const g1 = gcd(nn, dd);
+    const a2 = nn / g1, b2 = dd / g1;
+    const s = b2 === 1 ? String(a2) : a2 + '/' + b2;
+    if (used.has(s)) continue;
+    used.add(s); dis.push(s);
+  }
+  let k = 1;
+  while (dis.length < 3){
+    const nn = n + 3 * k, dd = d;
+    const g1 = gcd(nn, dd);
+    const a2 = nn / g1, b2 = dd / g1;
+    const s = b2 === 1 ? String(a2) : a2 + '/' + b2;
+    if (!used.has(s)){ used.add(s); dis.push(s); }
+    k++;
+  }
+  return mkItem(q, ans, dis, ex);
+}
+
+/* លំហាត់ជាមួយជម្រើសកំណត់ដោយដៃ */
+function customQ(q, ans, dis, ex){
+  return mkItem(q, ans, dis, ex);
+}
+
+/* ==================== ផ្នែកទី១៖ ប្រតិបត្តិការ (១០០) ==================== */
+function S1(){
+  const out = [];
+  for (let i = 0; i < 25; i++){
+    let a, b;
+    if (i < 15){ a = ri(10, 99); b = ri(10, 99); }
+    else { a = ri(100, 899); b = ri(100, 899); }
+    out.push(numQ(`${a} + ${b} = ?`, a + b));
+  }
+  for (let i = 0; i < 25; i++){
+    let a, b;
+    if (i < 15){ b = ri(10, 89); a = ri(b + 1, 99); }
+    else { b = ri(100, 799); a = ri(b + 1, 999); }
+    out.push(numQ(`${a} − ${b} = ?`, a - b));
+  }
+  for (let i = 0; i < 25; i++){
+    let a, b;
+    if (i < 10){ a = ri(2, 9); b = ri(2, 9); }
+    else if (i < 20){ a = ri(10, 99); b = ri(2, 9); }
+    else { a = ri(10, 99); b = ri(10, 19); }
+    out.push(numQ(`${a} × ${b} = ?`, a * b));
+  }
+  for (let i = 0; i < 25; i++){
+    let b, q;
+    if (i < 10){ b = ri(2, 9); q = ri(2, 9); }
+    else if (i < 20){ b = ri(2, 9); q = ri(10, 30); }
+    else { b = ri(10, 19); q = ri(2, 12); }
+    out.push(numQ(`${b * q} ÷ ${b} = ?`, q));
+  }
+  return out;
+}
+
+/* ==================== ផ្នែកទី២៖ ប្រភាគ (៧០) ==================== */
+function S2(){
+  const out = [];
+  const dens = [4, 5, 6, 7, 8, 9, 10, 12];
+
+  /* ២.១ បូក/ដកប្រភាគភាគបែងស្មើ (២៥) */
+  let cnt = 0, guard = 0;
+  while (cnt < 15 && guard++ < 4000){
+    const d = pick(dens);
+    const a = ri(1, d - 2);
+    const b = ri(1, d - 1 - a);
+    if (a + b >= d) continue;
+    if (gcd(a + b, d) !== 1) continue;
+    out.push(fracQ(`${a}/${d} + ${b}/${d} = ?`, a + b, d, `ភាគបែងស្មើ ដូច្នេះបូកភាគយក`));
+    cnt++;
+  }
+  cnt = 0; guard = 0;
+  while (cnt < 10 && guard++ < 4000){
+    const d = pick(dens);
+    const b = ri(1, d - 2);
+    const a = ri(b + 1, d - 1);
+    if (gcd(a - b, d) !== 1) continue;
+    out.push(fracQ(`${a}/${d} − ${b}/${d} = ?`, a - b, d, `ភាគបែងស្មើ ដូច្នេះដកភាគយក`));
+    cnt++;
+  }
+
+  /* ២.២ គុណ/ចែកប្រភាគ (១៥) */
+  for (let i = 0; i < 8; i++){
+    const b = ri(2, 9), d = ri(2, 9);
+    const a = ri(1, b - 1), c = ri(1, d - 1);
+    out.push(fracQ(`${a}/${b} × ${c}/${d} = ?`, a * c, b * d, `គុណភាគយកនឹងភាគយក ភាគបែងនឹងភាគបែង`));
+  }
+  for (let i = 0; i < 7; i++){
+    const b = ri(2, 9), d = ri(2, 9);
+    const a = ri(1, b - 1), c = ri(1, d - 1);
+    out.push(fracQ(`${a}/${b} ÷ ${c}/${d} = ?`, a * d, b * c, `ចែក = គុណនឹងប្រភាគច្រាស`));
+  }
+
+  /* ២.៣ បំប្លែងប្រភាគ (១៥) */
+  for (let i = 0; i < 5; i++){
+    const d = ri(2, 9), w = ri(1, 5), r = ri(1, d - 1);
+    const n = w * d + r;
+    out.push(customQ(`${n}/${d} = ? (បំប្លែងជាចំនួនលាយ)`, `${w} ${r}/${d}`,
+      [`${w + 1} ${r}/${d}`, `${Math.max(1, w - 1)} ${r}/${d}`, `${w} ${r + 1}/${d}`, `${w} ${Math.max(1, r - 1)}/${d}`, `${w + 2} ${r}/${d}`],
+      `ចែក ${n} នឹង ${d} បាន ${w} សល់ ${r}`));
+  }
+  for (let i = 0; i < 5; i++){
+    const d = ri(3, 9), w = ri(1, 4), r = ri(1, d - 1);
+    const n = w * d + r;
+    out.push(customQ(`${w} ${r}/${d} = ? (បំប្លែងជាប្រភាគមិនល្អ)`, `${n}/${d}`,
+      [`${w + r}/${d}`, `${w * r}/${d}`, `${n + 1}/${d}`, `${n}/${d + 1}`, `${w}/${d}`],
+      `គុណចំនួនគត់នឹងភាគបែង បូកភាគយក`));
+  }
+  for (let i = 0; i < 5; i++){
+    let bn, bd, g = 0, guard2 = 0;
+    do {
+      bn = ri(1, 5); bd = ri(2, 7);
+    } while (gcd(bn, bd) !== 1 && guard2++ < 200);
+    g = ri(2, 5);
+    const n = bn * g, d = bd * g;
+    out.push(customQ(`សម្រួលប្រភាគ ${n}/${d}`, `${bn}/${bd}`,
+      [`${n}/${d}`, `${bn + 1}/${bd}`, `${bn}/${bd + 1}`, `${bn}/${bd * 2}`, `${bn + 1}/${bd + 1}`],
+      `ចែកភាគយក និងភាគបែងនឹង ${g}`));
+  }
+
+  /* ២.៤ ប្រៀបធៀបប្រភាគ (១៥) */
+  function orderQ(largest){
+    const fr = [];
+    const used = new Set();
+    let g3 = 0;
+    while (fr.length < 4 && g3++ < 600){
+      const d = ri(3, 12);
+      const n = ri(1, d * 2);
+      const gg = gcd(n, d);
+      const s = (n / gg) + '/' + (d / gg);
+      if (used.has(s)) continue;
+      used.add(s);
+      fr.push({ s, v: n / d });
+    }
+    fr.sort((x, y) => x.v - y.v);
+    const ans = largest ? fr[fr.length - 1].s : fr[0].s;
+    const opts = fr.map(x => x.s);
+    return { q: largest ? 'តើប្រភាគណាធំជាងគេ?' : 'តើប្រភាគណាតូចជាងគេ?', o: opts, a: opts.indexOf(ans) };
+  }
+  for (let i = 0; i < 8; i++) out.push(orderQ(true));
+  for (let i = 0; i < 7; i++) out.push(orderQ(false));
+
+  return out;
+}
+
+/* ==================== ផ្នែកទី៣៖ ទសភាគ (៦០) ==================== */
+function S3(){
+  const out = [];
+
+  /* ៣.១ បូក/ដក (២០) */
+  for (let i = 0; i < 10; i++){
+    const A = ri(100, 9999), B = ri(100, 9999);
+    out.push(numQ(`${fn(A / 100)} + ${fn(B / 100)} = ?`, (A + B) / 100));
+  }
+  for (let i = 0; i < 10; i++){
+    let A = ri(200, 9999), B = ri(100, 9999);
+    if (B > A){ const t = A; A = B; B = t; }
+    out.push(numQ(`${fn(A / 100)} − ${fn(B / 100)} = ?`, (A - B) / 100));
+  }
+
+  /* ៣.២ គុណ/ចែក (២០) */
+  for (let i = 0; i < 10; i++){
+    const A = ri(11, 999), b = ri(2, 9);
+    out.push(numQ(`${fn(A / 100)} × ${b} = ?`, (A * b) / 100));
+  }
+  for (let i = 0; i < 10; i++){
+    const b = ri(2, 9), q = ri(11, 200);
+    out.push(numQ(`${fn((q * b) / 100)} ÷ ${b} = ?`, q / 100));
+  }
+
+  /* ៣.៣ បំប្លែង និងបង្គត់ (២០) */
+  const fds = [
+    [1, 2, 0.5], [1, 4, 0.25], [3, 4, 0.75], [1, 5, 0.2],
+    [2, 5, 0.4], [3, 5, 0.6], [4, 5, 0.8], [1, 8, 0.125],
+    [3, 8, 0.375], [5, 8, 0.625], [1, 10, 0.1], [3, 10, 0.3],
+    [7, 10, 0.7], [9, 10, 0.9], [1, 20, 0.05], [1, 25, 0.04]
+  ];
+  const picked = shuffle(fds).slice(0, 7);
+  for (const [n, d, dec] of picked){
+    const s = fn(dec);
+    const [ip, fp = ''] = s.split('.');
+    const cands = [];
+    if (fp.length >= 2){
+      const rev = fp.split('').reverse().join('');
+      if (rev !== fp) cands.push(ip + '.' + rev);
+    }
+    cands.push(fn(dec / 10));
+    cands.push(fn(dec * 10));
+    cands.push(fn(dec + 1));
+    cands.push(fn(Math.max(0.01, dec - 1)));
+    out.push(customQ(`${n}/${d} = ? (សរសេរជាទសភាគ)`, s, cands, `ចែក ${n} នឹង ${d}`));
+  }
+
+  const dfs = [
+    ['0.5', '1/2'], ['0.25', '1/4'], ['0.75', '3/4'], ['0.2', '1/5'],
+    ['0.4', '2/5'], ['0.6', '3/5'], ['0.8', '4/5'], ['0.1', '1/10'],
+    ['0.125', '1/8'], ['0.05', '1/20']
+  ];
+  const picked2 = shuffle(dfs).slice(0, 7);
+  for (const [dec, frac] of picked2){
+    const [n, d] = frac.split('/').map(Number);
+    out.push(customQ(`${dec} = ? (សរសេរជាប្រភាគ)`, frac,
+      [d + '/' + n, (n + 1) + '/' + d, n + '/' + (d + 1), (n + 1) + '/' + (d + 1), n + '/' + (d * 2)],
+      `${dec} = ${n}/${d}`));
+  }
+
+  for (let i = 0; i < 6; i++){
+    const whole = ri(1, 20);
+    const tenths = ri(1, 9);
+    const val = whole + tenths / 10;
+    const rounded = Math.round(val);
+    out.push(numQ(`បង្គត់ ${fn(val)} ទៅចំនួនគត់ជិតបំផុត`, rounded, `មើលខ្ទង់ដបភាគដប: ${tenths} ≥ 5 → បង្គត់ឡើង`));
+  }
+
+  return out;
+}
+
+/* ==================== ផ្នែកទី៤៖ រង្វាស់ (៧០) ==================== */
+function S4(){
+  const out = [];
+
+  /* ៤.១ ប្រវែង (១៥) */
+  for (let i = 0; i < 15; i++){
+    const t = i % 6;
+    if (t === 0){ const a = ri(1, 9); out.push(numQ(`${a} ម = ? សម`, a * 100, `១ ម = ១០០ សម`)); }
+    else if (t === 1){ const a = ri(1, 9); out.push(numQ(`${a} សម = ? មម`, a * 10, `១ សម = ១០ មម`)); }
+    else if (t === 2){ const a = ri(1, 9); out.push(numQ(`${a} គម = ? ម`, a * 1000, `១ គម = ១០០០ ម`)); }
+    else if (t === 3){ const a = ri(1, 9); out.push(numQ(`${a} ម = ? មម`, a * 1000, `១ ម = ១០០០ មម`)); }
+    else if (t === 4){ const a = ri(1, 9); out.push(numQ(`${a * 100} សម = ? ម`, a, `១០០ សម = ១ ម`)); }
+    else { const a = ri(1, 9); out.push(numQ(`${a * 1000} ម = ? គម`, a, `១០០០ ម = ១ គម`)); }
+  }
+
+  /* ៤.២ ម៉ាស (១៥) */
+  for (let i = 0; i < 15; i++){
+    const t = i % 4;
+    if (t === 0){ const a = ri(1, 9); out.push(numQ(`${a} គីឡូក្រាម = ? ក្រាម`, a * 1000, `១ គីឡូក្រាម = ១០០០ ក្រាម`)); }
+    else if (t === 1){ const a = ri(1, 9); out.push(numQ(`${a * 1000} ក្រាម = ? គីឡូក្រាម`, a, `១០០០ ក្រាម = ១ គីឡូក្រាម`)); }
+    else if (t === 2){ const a = ri(1, 9); out.push(numQ(`${a} តោន = ? គីឡូក្រាម`, a * 1000, `១ តោន = ១០០០ គីឡូក្រាម`)); }
+    else { const a = ri(1, 9); out.push(numQ(`${a * 500} ក្រាម = ? គីឡូក្រាម`, a / 2, `១០០០ ក្រាម = ១ គីឡូក្រាម`)); }
+  }
+
+  /* ៤.៣ មាឌ/ចំណុះ (១៥) */
+  for (let i = 0; i < 15; i++){
+    const t = i % 3;
+    if (t === 0){ const a = ri(1, 9); out.push(numQ(`${a} លីត្រ = ? មីលីលីត្រ`, a * 1000, `១ លីត្រ = ១០០០ មីលីលីត្រ`)); }
+    else if (t === 1){ const a = ri(1, 9); out.push(numQ(`${a * 1000} មីលីលីត្រ = ? លីត្រ`, a, `១០០០ មីលីលីត្រ = ១ លីត្រ`)); }
+    else { const a = ri(1, 9); out.push(numQ(`${a * 500} មីលីលីត្រ = ? លីត្រ`, a / 2, `១០០០ មីលីលីត្រ = ១ លីត្រ`)); }
+  }
+
+  /* ៤.៤ ពេលវេលា (១៥) */
+  for (let i = 0; i < 15; i++){
+    const t = i % 3;
+    if (t === 0){ const a = ri(1, 9); out.push(numQ(`${a} ម៉ោង = ? នាទី`, a * 60, `១ ម៉ោង = ៦០ នាទី`)); }
+    else if (t === 1){ const a = ri(1, 9); out.push(numQ(`${a} នាទី = ? វិនាទី`, a * 60, `១ នាទី = ៦០ វិនាទី`)); }
+    else { const a = ri(1, 9); out.push(numQ(`${a * 60} នាទី = ? ម៉ោង`, a, `៦០ នាទី = ១ ម៉ោង`)); }
+  }
+
+  /* ៤.៥ លុយ (១០) */
+  for (let i = 0; i < 10; i++){
+    if (i % 2 === 0){
+      const a = ri(1, 9);
+      out.push(numQ(`${a} ដុល្លារ = ? រៀល (ដោយ ១ ដុល្លារ = ៤០០០ រៀល)`, a * 4000, `គុណនឹង ៤០០០`));
+    } else {
+      const a = ri(1, 9);
+      out.push(numQ(`${a * 4000} រៀល = ? ដុល្លារ (ដោយ ១ ដុល្លារ = ៤០០០ រៀល)`, a, `ចែកនឹង ៤០០០`));
+    }
+  }
+
+  return out;
+}
+
+/* ==================== ផ្នែកទី៥៖ ធរណីមាត្រ (៨០) ==================== */
+function S5(){
+  const out = [];
+
+  /* ៥.១ បរិមាត្រ (២០) */
+  for (let i = 0; i < 8; i++){
+    const l = ri(5, 30), w = ri(3, l - 1);
+    out.push(numQ(`ចតុកោណកែងមួយមានបណ្តោយ ${l} ម និងទទឹង ${w} ម។ តើបរិមាត្រប៉ុន្មានម៉ែត្រ?`, 2 * (l + w), `បរិមាត្រ = ២ × (បណ្តោយ + ទទឹង)`));
+  }
+  for (let i = 0; i < 6; i++){
+    const s = ri(4, 25);
+    out.push(numQ(`ការ៉េមួយមានជ្រុងវែង ${s} សម។ តើបរិមាត្រប៉ុន្មានសង់ទីម៉ែត្រ?`, 4 * s, `បរិមាត្រការ៉េ = ៤ × ជ្រុង`));
+  }
+  for (let i = 0; i < 6; i++){
+    const a = ri(5, 20), b = ri(5, 20), c = ri(5, 20);
+    out.push(numQ(`ត្រីកោណមួយមានជ្រុងបីវែង ${a} សម ${b} សម និង ${c} សម។ តើបរិមាត្រប៉ុន្មានសង់ទីម៉ែត្រ?`, a + b + c, `បរិមាត្រត្រីកោណ = បូកជ្រុងទាំងបី`));
+  }
+
+  /* ៥.២ ផ្ទៃក្រឡា (២៥) */
+  for (let i = 0; i < 8; i++){
+    const l = ri(4, 30), w = ri(3, l - 1);
+    out.push(numQ(`ចតុកោណកែងមួយមានបណ្តោយ ${l} ម ទទឹង ${w} ម។ តើផ្ទៃក្រឡាប៉ុន្មានម៉ែត្រការ៉េ?`, l * w, `ផ្ទៃក្រឡា = បណ្តោយ × ទទឹង`));
+  }
+  for (let i = 0; i < 5; i++){
+    const s = ri(3, 20);
+    out.push(numQ(`ការ៉េមួយមានជ្រុងវែង ${s} សម។ តើផ្ទៃក្រឡាប៉ុន្មានសង់ទីម៉ែត្រការ៉េ?`, s * s, `ផ្ទៃក្រឡាការ៉េ = ជ្រុង × ជ្រុង`));
+  }
+  for (let i = 0; i < 6; i++){
+    const b = ri(4, 20) * 2, h = ri(3, 15);
+    out.push(numQ(`ត្រីកោណមួយមានបាត ${b} សម និងកម្ពស់ ${h} សម។ តើផ្ទៃក្រឡាប៉ុន្មានសង់ទីម៉ែត្រការ៉េ?`, (b * h) / 2, `ផ្ទៃក្រឡាត្រីកោណ = (បាត × កម្ពស់) ÷ ២`));
+  }
+  for (let i = 0; i < 3; i++){
+    const b = ri(5, 20), h = ri(3, 15);
+    out.push(numQ(`ប៉ារ៉ាឡែលមួយមានបាត ${b} ម និងកម្ពស់ ${h} ម។ តើផ្ទៃក្រឡាប៉ុន្មានម៉ែត្រការ៉េ?`, b * h, `ផ្ទៃក្រឡាប៉ារ៉ាឡែល = បាត × កម្ពស់`));
+  }
+  for (let i = 0; i < 3; i++){
+    const a = ri(4, 12), b = a + ri(2, 10), h = ri(2, 10) * 2;
+    out.push(numQ(`ចតុកោណស្មើមួយមានបាតស្របពីរវែង ${a} ម និង ${b} ម កម្ពស់ ${h} ម។ តើផ្ទៃក្រឡាប៉ុន្មានម៉ែត្រការ៉េ?`, ((a + b) * h) / 2, `ផ្ទៃក្រឡា = ((បាតតូច + បាតធំ) × កម្ពស់) ÷ ២`));
+  }
+
+  /* ៥.៣ មាឌ (១៥) */
+  for (let i = 0; i < 7; i++){
+    const s = ri(2, 10);
+    out.push(numQ(`គូបមួយមានជ្រុងវែង ${s} សម។ តើមាឌប៉ុន្មានសង់ទីម៉ែត្រគូប?`, s * s * s, `មាឌគូប = ជ្រុង × ជ្រុង × ជ្រុង`));
+  }
+  for (let i = 0; i < 8; i++){
+    const l = ri(2, 12), w = ri(2, 10), h = ri(2, 8);
+    out.push(numQ(`ស្ថេរគូបមួយមានបណ្តោយ ${l} ម ទទឹង ${w} ម កម្ពស់ ${h} ម។ តើមាឌប៉ុន្មានម៉ែត្រគូប?`, l * w * h, `មាឌ = បណ្តោយ × ទទឹង × កម្ពស់`));
+  }
+
+  /* ៥.៤ រូបរាង និងមុំ (១០) */
+  out.push(customQ('តើត្រីកោណមានជ្រុងប៉ុន្មាន?', '3 ជ្រុង', ['4 ជ្រុង', '5 ជ្រុង', '6 ជ្រុង']));
+  out.push(customQ('តើការ៉េមានជ្រុងប៉ុន្មាន?', '4 ជ្រុង', ['3 ជ្រុង', '5 ជ្រុង', '6 ជ្រុង']));
+  out.push(customQ('តើចតុកោណកែងមានជ្រុងប៉ុន្មាន?', '4 ជ្រុង', ['3 ជ្រុង', '5 ជ្រុង', '6 ជ្រុង']));
+  out.push(customQ('តើមុំកែងមានរង្វាស់ប៉ុន្មានដឺក្រេ?', '90°', ['45°', '60°', '180°']));
+  out.push(customQ('តើមុំត្រង់មានរង្វាស់ប៉ុន្មានដឺក្រេ?', '180°', ['90°', '45°', '360°']));
+  out.push(customQ('តើមុំមួយជុំពេញមានរង្វាស់ប៉ុន្មានដឺក្រេ?', '360°', ['180°', '90°', '270°']));
+  out.push(customQ('តើមុំស្រួចមានរង្វាស់ប៉ុន្មាន?', 'តូចជាង 90°', ['ស្មើ 90°', 'ធំជាង 90°', 'ស្មើ 180°']));
+  out.push(customQ('តើមុំទាលមានរង្វាស់ប៉ុន្មាន?', 'ធំជាង 90° តូចជាង 180°', ['តូចជាង 90°', 'ស្មើ 90°', 'ស្មើ 180°']));
+  out.push(customQ('តើរូបមានជ្រុង ៥ ហៅថាអ្វី?', 'បញ្ចកោណ', ['ចតុកោណ', 'ឆកោណ', 'ត្រីកោណ']));
+  out.push(customQ('តើរូបមានជ្រុង ៦ ហៅថាអ្វី?', 'ឆកោណ', ['បញ្ចកោណ', 'ចតុកោណ', 'ត្រីកោណ']));
+
+  /* ៥.៥ រង្វង់ (១០) */
+  const radii = [2, 4, 5, 10, 20];
+  for (let i = 0; i < 5; i++){
+    const r = radii[i];
+    const c = Math.round(2 * 3.14 * r * 100) / 100;
+    out.push(numQ(`រង្វង់មួយមានកាំ ${r} សម។ តើបរិមាត្រប៉ុន្មានសង់ទីម៉ែត្រ? (ប្រើ π = 3.14)`, c, `បរិមាត្ររង្វង់ = ២ × π × កាំ`));
+  }
+  for (let i = 0; i < 5; i++){
+    const r = radii[i];
+    const a = Math.round(3.14 * r * r * 100) / 100;
+    out.push(numQ(`រង្វង់មួយមានកាំ ${r} សម។ តើផ្ទៃក្រឡាប៉ុន្មានសង់ទីម៉ែត្រការ៉េ? (ប្រើ π = 3.14)`, a, `ផ្ទៃក្រឡារង្វង់ = π × កាំ × កាំ`));
+  }
+
+  return out;
+}
+
+/* ==================== ផ្នែកទី៦៖ ភាគរយ សមាមាត្រ មធ្យម (៦០) ==================== */
+function S6(){
+  const out = [];
+
+  /* ៦.១ ភាគរយ (២០) */
+  let cnt = 0, guard = 0;
+  const ps = [5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 80];
+  const bases = [20, 40, 50, 60, 80, 100, 120, 200, 250, 400, 500];
+  while (cnt < 20 && guard++ < 3000){
+    const p = pick(ps), b = pick(bases);
+    const ans = (p * b) / 100;
+    if (!Number.isInteger(ans)) continue;
+    out.push(numQ(`${p}% នៃ ${b} = ?`, ans, `គុណ ${b} នឹង ${p} រួចចែកនឹង ១០០`));
+    cnt++;
+  }
+
+  /* ៦.២ សមាមាត្រ (២០) */
+  for (let i = 0; i < 8; i++){
+    const g = ri(2, 6);
+    const a = ri(1, 6), b = ri(a + 1, 9);
+    const n1 = a * g, n2 = b * g;
+    out.push(customQ(`សម្រួលសមាមាត្រ ${n1} : ${n2}`, `${a} : ${b}`,
+      [`${b} : ${a}`, `${a + 1} : ${b}`, `${a} : ${b + 1}`, `${n1} : ${n2}`, `${a * 2} : ${b}`],
+      `ចែកទាំងពីរនឹង ${g}`));
+  }
+  for (let i = 0; i < 7; i++){
+    const a = ri(1, 5), b = ri(a + 1, 8), k = ri(2, 6);
+    out.push(numQ(`${a} : ${b} = ${a * k} : ?`, b * k, `គុណភាគពីរនឹង ${k}`));
+  }
+  for (let i = 0; i < 5; i++){
+    const g = ri(2, 10);
+    const a = ri(1, 4), b = ri(a + 1, 6);
+    const total = (a + b) * g;
+    const share = a * g;
+    out.push(numQ(`ចែកចំនួន ${total} តាមសមាមាត្រ ${a} : ${b}។ តើចំណែកតូចប៉ុន្មាន?`, share, `ចំនួនផ្នែកសរុប = ${a + b} ផ្នែក`));
+  }
+
+  /* ៦.៣ មធ្យម (២០) */
+  for (let i = 0; i < 20; i++){
+    const k = ri(3, 5);
+    const nums = [];
+    let sum = 0;
+    for (let j = 0; j < k; j++){
+      const v = ri(5, 50);
+      nums.push(v);
+      sum += v;
+    }
+    const avg = sum / k;
+    if (!Number.isInteger(avg)){
+      const diff = (k - (sum % k)) % k;
+      nums[0] += diff;
+      sum += diff;
+    }
+    out.push(numQ(`រកមធ្យមនៃចំនួន ${nums.join(', ')}`, sum / k, `បូកទាំងអស់ រួចចែកនឹង ${k}`));
+  }
+
+  return out;
+}
+
+/* ==================== ផ្នែកទី៧៖ ចំណោទពាក្យ (៦០) ==================== */
+const WPT = [
+  () => { const a = ri(15, 60), b = ri(10, 40); return numQ(`សុខាមានសៀវភៅ ${a} ក្បាល។ គាត់ទិញបន្ថែម ${b} ក្បាលទៀត។ តើគាត់មានសៀវភៅសរុបប៉ុន្មានក្បាល?`, a + b); },
+  () => { const a = ri(40, 100), b = ri(10, 35); return numQ(`ផ្សារមានផ្លែស្វាយ ${a} គ្រាប់។ លក់អស់ ${b} គ្រាប់។ តើនៅសល់ប៉ុន្មានគ្រាប់?`, a - b); },
+  () => { const b = ri(3, 8), q = ri(5, 12); return numQ(`ថ្នាក់រៀនមានសិស្ស ${b * q} នាក់ ត្រូវបែងចែកជា ${b} ក្រុមស្មើគ្នា។ តើក្រុមមួយមានសិស្សប៉ុន្មាននាក់?`, q); },
+  () => { const a = ri(5, 20), p = ri(2, 6) * 500; return numQ(`ម្តាយទិញអង្ករ ${a} គីឡូក្រាម ក្នុងតម្លៃ ${p} រៀល/គីឡូក្រាម។ តើត្រូវចំណាយប៉ុន្មានរៀល?`, a * p); },
+  () => { const t = ri(2, 6), s = ri(20, 60); return numQ(`រថយន្តធ្វើដំណើរ ${t * s} គីឡូម៉ែត្រក្នុងរយៈពេល ${t} ម៉ោង។ តើល្បឿនមធ្យមប៉ុន្មានគីឡូម៉ែត្រ/ម៉ោង?`, s); },
+  () => { const l = ri(10, 40), w = ri(5, l - 1); return numQ(`ដីមួយកន្លែងមានបណ្តោយ ${l} ម ទទឹង ${w} ម។ តើផ្ទៃក្រឡាប៉ុន្មានម៉ែត្រការ៉េ?`, l * w, `ផ្ទៃក្រឡា = បណ្តោយ × ទទឹង`); },
+  () => { const l = ri(10, 40), w = ri(5, l - 1); return numQ(`សួនច្បាររាងចតុកោណកែង មានបណ្តោយ ${l} ម ទទឹង ${w} ម។ តើបរិមាត្រប៉ុន្មានម៉ែត្រ?`, 2 * (l + w), `បរិមាត្រ = ២ × (បណ្តោយ + ទទឹង)`); },
+  () => { const b = ri(2, 5), g = ri(2, 5); return numQ(`ថ្នាក់មួយមានសិស្សស្រី ${b} នាក់ និងសិស្សប្រុស ${g} នាក់។ តើសិស្សស្រីមានប៉ុន្មានភាគរយនៃសិស្សសរុប?`, Math.round((b / (b + g)) * 10000) / 100, `ភាគរយ = (ស្រី ÷ សរុប) × ១០០`); },
+  () => { const p = ri(10, 40), pr = ri(5, 30) * 1000; return numQ(`សៀវភៅមួយមានតម្លៃ ${pr} រៀល ហើយបញ្ចុះតម្លៃ ${p}%។ តើត្រូវបង់ប៉ុន្មានរៀល?`, pr * (100 - p) / 100, `តម្លៃសល់ = ${pr} × (១០០ − ${p})%`); },
+  () => { const h1 = ri(7, 10), m1 = ri(0, 5) * 10, h2 = h1 + ri(1, 3), m2 = ri(0, 5) * 10; return numQ(`ការប្រកួតចាប់ផ្តើមម៉ោង ${h1}:${String(m1).padStart(2, '0')} និងបញ្ចប់ម៉ោង ${h2}:${String(m2).padStart(2, '0')}។ តើការប្រកួតយូរប៉ុន្មាននាទី?`, (h2 * 60 + m2) - (h1 * 60 + m1), `បំប្លែងជានាទី រួចដក`); },
+  () => { const a = ri(3, 8), p1 = ri(2, 5) * 500, b = ri(2, 6), p2 = ri(1, 3) * 500; return numQ(`សុខាទិញប៊ិច ${a} ដើម តម្លៃ ${p1} រៀល/ដើម និងសៀវភៅ ${b} ក្បាល តម្លៃ ${p2} រៀល/ក្បាល។ តើត្រូវចំណាយសរុបប៉ុន្មានរៀល?`, a * p1 + b * p2); },
+  () => { const a = ri(5000, 20000), b = ri(1000, 4500); return numQ(`ធនាគារមានប្រាក់ ${a} រៀល។ គាត់ចំណាយអស់ ${b} រៀល។ តើនៅសល់ប៉ុន្មានរៀល?`, a - b); },
+  () => { const n = ri(4, 9), q = ri(10, 30); return numQ(`សៀវភៅ ${n * q} ក្បាល ត្រូវចែកឱ្យសិស្ស ${n} នាក់ស្មើៗគ្នា។ តើសិស្សម្នាក់ទទួលបានប៉ុន្មានក្បាល?`, q); },
+  () => { const k = ri(3, 5); const nums = []; let s = 0; for (let i = 0; i < k; i++){ const v = ri(10, 50); nums.push(v); s += v; } const avg = Math.round(s / k); return numQ(`ពិន្ទុសិស្សម្នាក់ក្នុងវិញ្ញាសា ${k} គឺ ${nums.join(', ')}។ តើពិន្ទុមធ្យមប៉ុន្មាន?`, avg, `បូកពិន្ទុទាំងអស់ រួចចែកនឹង ${k}`); },
+  () => { const g = ri(2, 10), a = ri(1, 3), b = ri(a + 1, 6); return numQ(`ចែកប្រាក់ ${(a + b) * g * 1000} រៀល តាមសមាមាត្រ ${a} : ${b}។ តើចំណែកតូចប៉ុន្មានរៀល?`, a * g * 1000, `ចំនួនផ្នែកសរុប ${a + b}`); },
+  () => { const l = ri(4, 10), w = ri(3, 8), h = ri(2, 6); return numQ(`អាងទឹកមួយមានបណ្តោយ ${l} ម ទទឹង ${w} ម ជម្រៅ ${h} ម។ តើអាងនេះផ្ទុកទឹកបានប៉ុន្មានម៉ែត្រគូប?`, l * w * h, `មាឌ = បណ្តោយ × ទទឹង × ជម្រៅ`); },
+  () => { const a = ri(2, 9); return numQ(`ផ្លូវវែង ${a} គីឡូម៉ែត្រ។ តើវែងប៉ុន្មានម៉ែត្រ?`, a * 1000, `១ គម = ១០០០ ម`); },
+  () => { const a = ri(2, 8), b = ri(3, 9); return numQ(`ថង់មួយមានអង្ករ ${a} គីឡូក្រាម និងថង់មួយទៀតមាន ${b} គីឡូក្រាម។ តើទាំងពីរថង់មានអង្ករសរុបប៉ុន្មានគីឡូក្រាម?`, a + b); },
+  () => { const a = ri(20, 80), b = ri(10, 60); return numQ(`សុខាមានប្រាក់ ${a * 1000} រៀល សុភាមាន ${b * 1000} រៀល។ តើអ្នកណាមានច្រើនជាង និងច្រើនប៉ុន្មានរៀល?`, Math.max(a, b) * 1000 - Math.min(a, b) * 1000, `ដកចំនួនតូចចេញពីចំនួនធំ`); },
+  () => { const a = ri(5, 25); return numQ(`សិស្សម្នាក់មានសៀវភៅ ${a} ក្បាល។ បងរបស់គាត់មានសៀវភៅច្រើនជាងគាត់ពីរដង។ តើបងមានសៀវភៅប៉ុន្មានក្បាល?`, a * 2); },
+  () => { const a = ri(2, 12) * 2; return numQ(`ចម្ការមួយមានដើមឈើ ${a} ដើម។ មួយភាគពីរនៃដើមឈើទាំងនោះជាដើមស្វាយ។ តើមានដើមស្វាយប៉ុន្មានដើម?`, a / 2, `ចែកនឹង ២`); },
+  () => { const d = ri(4, 12), w = ri(2, 5); return numQ(`កម្មករ ${d} នាក់ ធ្វើការ ${w} ថ្ងៃ បានប្រាក់សរុប ${d * w * 20000} រៀល។ តើកម្មករម្នាក់ទទួលបានប៉ុន្មានរៀលក្នុងមួយថ្ងៃ?`, 20000, `ចែកសរុបនឹង (ចំនួនកម្មករ × ចំនួនថ្ងៃ)`); },
+  () => { const child = ri(8, 14), diff = ri(20, 35); return numQ(`កូនមានអាយុ ${child} ឆ្នាំ។ ម្តាយមានអាយុច្រើនជាងកូន ${diff} ឆ្នាំ។ តើម្តាយមានអាយុប៉ុន្មានឆ្នាំ?`, child + diff); },
+  () => { const s = ri(5, 20); return numQ(`ចម្ការការ៉េមួយមានជ្រុងវែង ${s} ម។ តើបរិមាត្រប៉ុន្មានម៉ែត្រ?`, 4 * s, `បរិមាត្រការ៉េ = ៤ × ជ្រុង`); },
+  () => { const b = ri(4, 20) * 2, h = ri(3, 15); return numQ(`ដីរាងត្រីកោណមួយមានបាត ${b} ម កម្ពស់ ${h} ម។ តើផ្ទៃក្រឡាប៉ុន្មានម៉ែត្រការ៉េ?`, (b * h) / 2, `ផ្ទៃក្រឡា = (បាត × កម្ពស់) ÷ ២`); },
+  () => { const p = ri(10, 50), old = ri(2, 10) * 100; return numQ(`តម្លៃទំនិញកើនឡើង ${p}% ពី ${old} រៀល។ តើកើនឡើងប៉ុន្មានរៀល?`, Math.round(old * p / 100 * 100) / 100, `កើនឡើង = ${old} × ${p}%`); },
+  () => { const n = ri(4, 12), p = ri(2, 6) * 500; return numQ(`សុខាទិញខ្មៅដៃ ${n} ដើម ក្នុងតម្លៃ ${p} រៀល/ដើម។ តើត្រូវចំណាយសរុបប៉ុន្មានរៀល?`, n * p); },
+  () => { const g = ri(3, 8), per = ri(4, 10); return numQ(`សិស្ស ${g * per} នាក់ ត្រូវបែងចែកជាក្រុម ដោយក្រុមមួយមានសិស្ស ${per} នាក់។ តើបានប៉ុន្មានក្រុម?`, g); },
+  () => { const days = ri(5, 20), per = ri(20, 60); return numQ(`គ្រួសារមួយប្រើទឹក ${per} លីត្រ/ថ្ងៃ។ តើក្នុងរយៈពេល ${days} ថ្ងៃ ប្រើទឹកសរុបប៉ុន្មានលីត្រ?`, days * per); },
+  () => { const s = ri(3, 8), rows = ri(4, 10), per = ri(5, 15); return numQ(`ទូសៀវភៅមួយមាន ${rows} ជាន់ ហើយជាន់មួយដាក់សៀវភៅបាន ${per} ក្បាល។ តើទូនេះដាក់សៀវភៅបានសរុបប៉ុន្មានក្បាល?`, rows * per); }
+];
+
+function S7(){
+  const out = [];
+  for (const t of WPT){
+    out.push(t());
+    out.push(t());
+  }
+  return out;
+}
+
+/* ==================== ទិន្នន័យសរុប ==================== */
+const DATA = [
+  { id:'s1', title:'ផ្នែកទី១៖ ប្រតិបត្តិការគណិត (១០០ លំហាត់)', desc:'បូក ដក គុណ ចែក លើចំនួនគត់។', items: S1() },
+  { id:'s2', title:'ផ្នែកទី២៖ ប្រភាគ (៧០ លំហាត់)', desc:'បូក ដក គុណ ចែក បំប្លែង និងប្រៀបធៀបប្រភាគ។', items: S2() },
+  { id:'s3', title:'ផ្នែកទី៣៖ ទសភាគ (៦០ លំហាត់)', desc:'ប្រតិបត្តិការលើទសភាគ ការបំប្លែង និងការបង្គត់។', items: S3() },
+  { id:'s4', title:'ផ្នែកទី៤៖ រង្វាស់ (៧០ លំហាត់)', desc:'ប្រវែង ម៉ាស មាឌ ពេលវេលា និងលុយ។', items: S4() },
+  { id:'s5', title:'ផ្នែកទី៥៖ ធរណីមាត្រ (៨០ លំហាត់)', desc:'បរិមាត្រ ផ្ទៃក្រឡា មាឌ មុំ និងរង្វង់។', items: S5() },
+  { id:'s6', title:'ផ្នែកទី៦៖ ភាគរយ សមាមាត្រ និងមធ្យម (៦០ លំហាត់)', desc:'គណនាភាគរយ សមាមាត្រ និងមធ្យមលេខ។', items: S6() },
+  { id:'s7', title:'ផ្នែកទី៧៖ ចំណោទពាក្យ (៦០ លំហាត់)', desc:'ចំណោទជីវិតពិត ដែលត្រូវអានយល់ រួចគណនា។', items: S7() }
+];
+
+/* ==================== ការបង្ហាញ ==================== */
+const LETTERS = ['ក','ខ','គ','ឃ'];
+const app = document.getElementById('app');
+const scoreEl = document.getElementById('score');
+const totalEl = document.getElementById('total');
+const navEl = document.getElementById('secnav');
+let correctCount = 0;
+
+function render(){
+  correctCount = 0;
+  scoreEl.textContent = km(0);
+
+  let html = '';
+  let n = 0;
+
+  DATA.forEach(sec => {
+    html += '<section class="section" id="' + sec.id + '">';
+    html += '<h2>' + sec.title + '</h2>';
+    html += '<p class="desc">' + sec.desc + '</p>';
+
+    sec.items.forEach(it => {
+      n++;
+      html += '<div class="q">';
+      html += '<div class="qtext"><span class="num">' + km(n) + '.</span> ' + km(it.q) + '</div>';
+      html += '<div class="opts">';
+      it.o.forEach((txt, i) => {
+        html += '<button class="opt" data-i="' + i + '" data-a="' + it.a + '">'
+              + LETTERS[i] + '. ' + km(txt) + '</button>';
+      });
+      html += '</div>';
+      let ansHtml = 'ចម្លើយត្រឹមត្រូវ៖ ' + LETTERS[it.a] + '. ' + km(it.o[it.a]);
+      if (it.ex){
+        ansHtml += '<br><span style="font-weight:400;color:#4a5a72;font-size:13.5px">' + km(it.ex) + '</span>';
+      }
+      html += '<div class="ans">' + ansHtml + '</div>';
+      html += '</div>';
+    });
+
+    html += '</section>';
+  });
+
+  app.innerHTML = html;
+  totalEl.textContent = km(n);
+
+  navEl.innerHTML = DATA.map((s, i) =>
+    '<a href="#' + s.id + '">' + km(i + 1) + '. ' + s.title.replace(/^ផ្នែកទី[^៖]*៖\s*/, '').replace(/\s*\(.*\)$/, '') + '</a>'
+  ).join('');
+}
+
+/* ចុចជម្រើស */
+app.addEventListener('click', e => {
+  const btn = e.target.closest('.opt');
+  if (!btn || btn.disabled) return;
+
+  const qEl = btn.closest('.q');
+  const opts = qEl.querySelectorAll('.opt');
+  const ansEl = qEl.querySelector('.ans');
+  const chosen = +btn.dataset.i;
+  const correct = +btn.dataset.a;
+
+  if (chosen === correct){
+    btn.classList.add('correct');
+    opts.forEach(b => b.disabled = true);
+    ansEl.classList.add('show');
+    correctCount++;
+    scoreEl.textContent = km(correctCount);
+  } else {
+    btn.classList.add('wrong');
+    btn.disabled = true;
+  }
+});
+
+/* ប៊ូតុង */
+document.getElementById('btnShowAll').addEventListener('click', () => {
+  document.querySelectorAll('.q').forEach(qEl => {
+    qEl.querySelectorAll('.opt').forEach(b => {
+      if (+b.dataset.i === +b.dataset.a){
+        b.classList.add('correct');
+      }
+      b.disabled = true;
+    });
+    qEl.querySelector('.ans').classList.add('show');
+  });
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('btnPrint').addEventListener('click', () => {
+  document.body.classList.remove('print-answers');
+  window.print();
+});
+
+document.getElementById('btnPrintAns').addEventListener('click', () => {
+  document.body.classList.add('print-answers');
+  window.print();
+});
+
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('print-answers');
+});
+
+/* ចាប់ផ្តើម */
+render();
+</script>
+</body>
+</html>

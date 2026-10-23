@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>ត្រៀមប្រឡងគ្រូបឋមសិក្សា | វិញ្ញាសាហាត់ប្រាណ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;600;700;800&family=Moul&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#667085;--line:#e3e8f0;--blue:#3157d5;--blue-soft:#eef2ff;--teal:#087e8b;--teal-soft:#e9f8f7;--violet:#7652c7;--violet-soft:#f2edfc;--shadow:0 18px 45px #17203312}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 10% 0%,#e9efff 0,transparent 32rem),#f5f7fb;color:var(--ink);font-family:'Noto Sans Khmer',system-ui,sans-serif;line-height:1.8}
+    a{color:inherit}
+    .shell{width:min(1080px,calc(100% - 40px));margin:auto;padding:44px 0 56px}
+    .topline{display:flex;align-items:center;gap:10px;color:#5d6a82;font-size:13px;font-weight:700;letter-spacing:.02em}
+    .mark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#172033;color:white;font-size:17px}
+    .hero{padding:52px 0 34px;max-width:750px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid #dce4fa;border-radius:99px;background:#fff;color:var(--blue);font-size:13px;font-weight:700}
+    .eyebrow:before{content:'';width:7px;height:7px;border-radius:50%;background:#5b77e8}
+    h1{margin:17px 0 12px;font-family:'Moul','Noto Sans Khmer',serif;font-weight:400;font-size:clamp(27px,4vw,42px);line-height:1.55;letter-spacing:.01em}
+    .intro{margin:0;color:var(--muted);font-size:16px;max-width:620px}
+    .section-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:20px 0 18px}
+    h2{margin:0;font-size:20px;font-weight:800}
+    .section-note{margin:4px 0 0;color:var(--muted);font-size:14px}
+    .count{color:#7b8495;font-size:13px;white-space:nowrap}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .card{--tone:var(--blue);--wash:var(--blue-soft);position:relative;display:flex;flex-direction:column;min-height:205px;padding:22px 23px 19px;border:1px solid var(--line);border-radius:18px;background:#fff;text-decoration:none;box-shadow:0 3px 12px #17203305;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+    .card:hover{transform:translateY(-3px);border-color:#c4cef2;box-shadow:var(--shadow)}
+    .card:focus-visible{outline:3px solid #8ca1ff;outline-offset:3px}
+    .card.khmer{--tone:var(--teal);--wash:var(--teal-soft)}
+    .card.math{--tone:var(--blue);--wash:var(--blue-soft)}
+    .card.primary{--tone:var(--violet);--wash:var(--violet-soft)}
+    .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+    .icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:var(--wash);color:var(--tone);font-size:20px;font-weight:800}
+    .tag{padding:4px 10px;border-radius:99px;background:var(--wash);color:var(--tone);font-size:12px;font-weight:700}
+    .card h3{margin:0;font-size:18px;line-height:1.7;font-weight:800}
+    .card p{margin:5px 0 18px;color:var(--muted);font-size:14px}
+    .card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:13px;border-top:1px solid #f0f2f6;color:#5c6678;font-size:13px}
+    .open{display:flex;align-items:center;gap:8px;color:var(--tone);font-weight:800}
+    .arrow{font-family:Arial,sans-serif;font-size:19px;transition:transform .18s ease}
+    .card:hover .arrow{transform:translateX(4px)}
+    footer{display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:#8790a0;font-size:12px}
+    @media(max-width:640px){.shell{width:min(100% - 28px,500px);padding-top:24px}.hero{padding:38px 0 24px}.grid{grid-template-columns:1fr;gap:12px}.card{min-height:190px}.section-heading{align-items:start}.count{padding-top:5px}footer{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topline"><span class="mark" aria-hidden="true">✦</span><span>មជ្ឈមណ្ឌលត្រៀមប្រឡង</span></div>
+    <header class="hero">
+      <span class="eyebrow">សម្រាប់ការហាត់រៀនដោយខ្លួនឯង</span>
+      <h1>ត្រៀមប្រឡងគ្រូបឋមសិក្សា</h1>
+      <p class="intro">ជ្រើសរើសមុខវិជ្ជា និងចំនួនលំហាត់ ដើម្បីចាប់ផ្តើមហាត់សំណួរ។</p>
+    </header>
+
+    <section aria-labelledby="exams-title">
+      <div class="section-heading">
+        <div><h2 id="exams-title">ជ្រើសរើសវិញ្ញាសា</h2><p class="section-note">ចុចលើវិញ្ញាសាណាមួយដើម្បីបើក និងចាប់ផ្តើមហាត់</p></div>
+        <span class="count">៥ វិញ្ញាសា</span>
+      </div>
+      <nav class="grid" aria-label="បញ្ជីវិញ្ញាសា">
+        <a class="card khmer" href="./khmer-exam.html">
+          <div class="card-top"><span class="icon" aria-hidden="true">ក</span><span class="tag">ភាសាខ្មែរ</span></div>
+          <h3>វិញ្ញាសាភាសាខ្មែរ</h3><p>លំហាត់សម្រាប់ត្រៀមប្រឡងគ្រូបឋមសិក្សា</p>
+          <div class="card-bottom"><span>២០០ លំហាត់</span><span class="open">ចាប់ផ្តើម <span class="arrow" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card khmer" href="./khmer-exam-500.html">
+          <div class="card-top"><span class="icon" aria-hidden="true">ក</span><span class="tag">ភាសាខ្មែរ</span></div>
+          <h3>វិញ្ញាសាភាសាខ្មែរ</h3><p>សំណួរហាត់បន្ថែមសម្រាប់គ្រប់កម្រិតថ្នាក់</p>
+          <div class="card-bottom"><span>៥០០ លំហាត់</span><span class="open">ចាប់ផ្តើម <span class="arrow" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card math" href="./math-exam.html">
+          <div class="card-top"><span class="icon" aria-hidden="true">∑</span><span class="tag">គណិតវិទ្យា</span></div>
+          <h3>វិញ្ញាសាគណិតវិទ្យា</h3><p>សំណួរគណនា និងចំណេះដឹងគណិតវិទ្យា</p>
+          <div class="card-bottom"><span>២០០ លំហាត់</span><span class="open">ចាប់ផ្តើម <span class="arrow" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card primary" href="./math_primary_teacher_exam_200_km.html">
+          <div class="card-top"><span class="icon" aria-hidden="true">＋</span><span class="tag">គណិតវិទ្យា</span></div>
+          <h3>វិញ្ញាសាគណិតវិទ្យា</h3><p>ឯកសារហាត់ប្រឡងគ្រូបឋមសិក្សា</p>
+          <div class="card-bottom"><span>២០០ លំហាត់</span><span class="open">ចាប់ផ្តើម <span class="arrow" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card math" href="./math-exam-500.html">
+          <div class="card-top"><span class="icon" aria-hidden="true">∑</span><span class="tag">គណិតវិទ្យា</span></div>
+          <h3>វិញ្ញាសាគណិតវិទ្យា</h3><p>សំណួរហាត់បន្ថែមសម្រាប់កម្រិតថ្នាក់ទី៧–១២</p>
+          <div class="card-bottom"><span>៥០០ លំហាត់</span><span class="open">ចាប់ផ្តើម <span class="arrow" aria-hidden="true">→</span></span></div>
+        </a>
+      </nav>
+    </section>
+    <footer><span>ជ្រើសរើសវិញ្ញាសា ហើយចាប់ផ្តើមហាត់តាមល្បឿនរបស់អ្នក</span><span>ត្រៀមខ្លួន · ហាត់រៀន · ជោគជ័យ</span></footer>
+  </main>
+</body>
+</html>

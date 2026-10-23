@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>វិញ្ញាសាគណិតវិទ្យា ៥០០ លំហាត់ | ថ្នាក់ទី៧–១២</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;700&family=Moul&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Noto Sans Khmer',system-ui,sans-serif;
+    background:#eef2f7;color:#1f2937;line-height:1.9;font-size:16px;
+    padding-bottom:70px;
+  }
+  header{
+    background:linear-gradient(135deg,#0b3d91,#1a5fb4 60%,#2c7be5);
+    color:#fff;padding:30px 20px 26px;text-align:center;
+    box-shadow:0 4px 18px rgba(11,61,145,.25);
+  }
+  header h1{font-family:'Moul',serif;font-weight:400;font-size:clamp(17px,4vw,26px);line-height:1.7;margin-bottom:8px}
+  header p{opacity:.92;font-size:14px}
+  .toolbar{
+    position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #dbe3ee;
+    padding:10px 14px;display:flex;gap:9px;flex-wrap:wrap;justify-content:center;align-items:center;
+    box-shadow:0 2px 10px rgba(15,35,80,.06);
+  }
+  .toolbar button{
+    font-family:inherit;font-size:14px;cursor:pointer;
+    border:1px solid #1a5fb4;background:#fff;color:#1a5fb4;
+    padding:7px 15px;border-radius:999px;transition:.18s;white-space:nowrap;
+  }
+  .toolbar button:hover{background:#1a5fb4;color:#fff}
+  .score{
+    font-size:14px;font-weight:700;color:#0b3d91;background:#e8f0fc;
+    padding:7px 16px;border-radius:999px;border:1px solid #c6daf8;white-space:nowrap;
+  }
+  .secnav{
+    max-width:900px;margin:14px auto 0;padding:0 14px;
+    display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+  }
+  .secnav a{
+    font-size:12.5px;text-decoration:none;color:#1a5fb4;background:#fff;
+    border:1px solid #d3e0f2;padding:4px 11px;border-radius:999px;
+  }
+  .secnav a:hover{background:#1a5fb4;color:#fff}
+  main{max-width:900px;margin:0 auto;padding:18px 14px}
+  .section{
+    background:#fff;border-radius:14px;padding:20px 18px;margin-bottom:22px;
+    box-shadow:0 2px 12px rgba(15,35,80,.07);
+  }
+  .section h2{
+    font-family:'Moul',serif;font-weight:400;font-size:16.5px;color:#0b3d91;
+    border-bottom:2px solid #e3ebf7;padding-bottom:10px;margin-bottom:8px;line-height:1.7;
+  }
+  .section .desc{font-size:14px;color:#5b6b82;margin-bottom:6px}
+  .q{padding:13px 0;border-bottom:1px dashed #e8eef7}
+  .q:last-child{border-bottom:none}
+  .qtext{font-weight:500;margin-bottom:6px}
+  .num{color:#1a5fb4;font-weight:700;margin-right:5px}
+  .opts{display:flex;flex-direction:column;gap:7px;margin:9px 0 4px 4px}
+  .opt{
+    font-family:inherit;font-size:15px;text-align:left;cursor:pointer;line-height:1.7;
+    background:#f7f9fc;border:1px solid #dfe7f2;border-radius:9px;
+    padding:8px 13px;color:#22303f;transition:.15s;
+  }
+  .opt:hover:not(:disabled){background:#e8f0fc;border-color:#a9c6ee}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:#e6f7ec;border-color:#3aa76d;color:#146c43;font-weight:600}
+  .opt.wrong{background:#fdeaea;border-color:#e06b6b;color:#a12222;text-decoration:line-through}
+  .ans{
+    display:none;margin-top:9px;padding:9px 13px;border-radius:8px;
+    background:#eef6ff;border-right:4px solid #1a5fb4;
+    color:#0b3d91;font-size:14.5px;font-weight:500;
+  }
+  .ans.show{display:block}
+  footer{text-align:center;color:#8395ab;font-size:13px;padding:18px}
+  @media print{
+    .toolbar,.secnav,header p{display:none}
+    body{background:#fff;padding:0;font-size:12pt}
+    header{background:#fff;color:#000;box-shadow:none;padding:0 0 12px;border-bottom:2px solid #000;margin-bottom:14px}
+    main{padding:0;max-width:100%}
+    .section{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid;margin-bottom:14px}
+    .opt{background:#fff;border:1px solid #ddd;cursor:default}
+    .opt.wrong{text-decoration:none;background:#fff;color:#000}
+    body.print-answers .ans{display:block !important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>វិញ្ញាសាគណិតវិទ្យា ៥០០ លំហាត់</h1>
+  <p>ថ្នាក់ទី៧ ដល់ថ្នាក់ទី១២ • មានចម្លើយពន្យល់ភ្លាមៗ</p>
+</header>
+
+<div class="toolbar">
+  <span class="score">ឆ្លើយត្រូវ៖ <span id="score">០</span> / <span id="total">៥០០</span></span>
+  <button id="btnShowAll">បង្ហាញចម្លើយទាំងអស់</button>
+  <button id="btnReset">ចាប់ផ្តើមឡើងវិញ</button>
+  <button id="btnPrint">បោះពុម្ព (គ្មានចម្លើយ)</button>
+  <button id="btnPrintAns">បោះពុម្ព (មានចម្លើយ)</button>
+</div>
+
+<nav class="secnav" id="secnav"></nav>
+
+<main id="app"></main>
+
+<footer>© វិញ្ញាសាត្រៀមប្រឡងគ្រូបឋមសិក្សា — គណិតវិទ្យា ថ្នាក់ទី៧–១២</footer>
+
+<script>
+/* ==================== Utilities ==================== */
+const KHD = '០១២៣៤៥៦៧៨៩';
+const km = s => String(s).replace(/[0-9]/g, d => KHD[+d]);
+const LETTERS = ['ក','ខ','គ','ឃ'];
+
+let _seed = 97531864;
+function rnd(){
+  _seed = (Math.imul(_seed, 1664525) + 1013904223) & 0x7fffffff;
+  return _seed / 2147483648;
+}
+function ri(a, b){ return a + Math.floor(rnd() * (b - a + 1)); }
+function pick(arr){ return arr[Math.floor(rnd() * arr.length)]; }
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(rnd() * (i + 1));
+    const t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function gcd(a, b){
+  a = Math.abs(a); b = Math.abs(b);
+  while (b){ const t = a % b; a = b; b = t; }
+  return a || 1;
+}
+function fn(x){
+  if (!isFinite(x)) return String(x);
+  const r = Math.round(x * 1000) / 1000;
+  let s = r.toFixed(3);
+  s = s.replace(/0+$/, '').replace(/\.$/, '');
+  return s;
+}
+
+function mkItem(q, ans, dis, ex){
+  const all = [ans];
+  const used = new Set([ans]);
+  for (const s of dis){
+    if (all.length === 4) break;
+    if (used.has(s)) continue;
+    used.add(s);
+    all.push(s);
+  }
+  let k = 1;
+  while (all.length < 4){
+    const s = ans + ' (' + k + ')';
+    if (!used.has(s)){ used.add(s); all.push(s); }
+    k++;
+  }
+  const opts = shuffle(all);
+  const it = { q, o: opts, a: opts.indexOf(ans) };
+  if (ex) it.ex = ex;
+  return it;
+}
+
+function numQ(q, ansNum, ex){
+  if (typeof ansNum !== 'number' || !Number.isFinite(ansNum)){
+    throw new TypeError('numQ requires a finite numeric answer');
+  }
+  const ans = fn(ansNum);
+  const used = new Set([ans]);
+  const dis = [];
+  const A = Math.abs(ansNum);
+  let steps;
+  if (A >= 1000)      steps = [1, 10, 100, -1, -10, -100, 2, -2];
+  else if (A >= 100)  steps = [1, 10, -1, -10, 0.5, -0.5, 2];
+  else if (A >= 10)   steps = [1, 2, -1, -2, 0.5, -0.5, 0.1];
+  else if (A >= 1)    steps = [0.1, 0.2, -0.1, -0.2, 0.5, -0.5, 1];
+  else                steps = [0.01, 0.05, 0.1, -0.01, -0.05, -0.1];
+  if (Number.isInteger(ansNum)) steps = steps.filter(s => Number.isInteger(s));
+  let guard = 0;
+  while (dis.length < 3 && guard++ < 400){
+    const d = pick(steps);
+    const v = Math.round((ansNum + d) * 1000) / 1000;
+    const s = fn(v);
+    if (used.has(s)) continue;
+    used.add(s); dis.push(s);
+  }
+  let k = 1;
+  while (dis.length < 3){
+    const s = fn(ansNum * 2 + k * 7 + 1);
+    if (!used.has(s)){ used.add(s); dis.push(s); }
+    k++;
+  }
+  return mkItem(q, ans, dis, ex);
+}
+
+/* ==================== ថ្នាក់ទី៧ (៨០) ==================== */
+function G7(){
+  const out = [];
+  // ៧.១ ចំនួនគត់ និងប្រតិបត្តិការ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(-20, -3), b = ri(-15, -1);
+    out.push(numQ(`${a} + (${b}) = ?`, a + b, 'បូកចំនួនអវិជ្ជមាន'));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(-15, -2), b = ri(-12, -1);
+    out.push(numQ(`${a} − (${b}) = ?`, a - b, 'ដកចំនួនអវិជ្ជមាន = បូកចំនួនវិជ្ជមាន'));
+  }
+
+  // ៧.២ ភាគរយ (១២)
+  const bases = [50, 80, 100, 120, 150, 200, 250, 300, 400, 500];
+  const ps = [5, 10, 15, 20, 25, 30, 40, 50, 60, 75, 80];
+  let cnt = 0, guard = 0;
+  while (cnt < 12 && guard++ < 2000){
+    const p = pick(ps), b = pick(bases);
+    const ans = (p * b) / 100;
+    if (!Number.isInteger(ans)) continue;
+    out.push(numQ(`${p}% នៃ ${b} = ?`, ans, `គុណ ${b} នឹង ${p} រួចចែកនឹង ១០០`));
+    cnt++;
+  }
+
+  // ៧.៣ សមាមាត្រ (១២)
+  for (let i = 0; i < 6; i++){
+    const g = ri(2, 6);
+    const a = ri(1, 5), b = ri(a + 1, 8);
+    const n1 = a * g, n2 = b * g;
+    out.push(mkItem(`សម្រួលសមាមាត្រ ${n1} : ${n2}`, `${a} : ${b}`,
+      [`${b} : ${a}`, `${a + 1} : ${b}`, `${a} : ${b + 1}`, `${n1} : ${n2}`],
+      `ចែកទាំងពីរនឹង ${g}`));
+  }
+  for (let i = 0; i < 6; i++){
+    const a = ri(1, 5), b = ri(a + 1, 8), k = ri(2, 6);
+    out.push(numQ(`${a} : ${b} = ${a * k} : ?`, b * k, `គុណភាគពីរនឹង ${k}`));
+  }
+
+  // ៧.៤ ចំនួនគត់ និងតម្លៃដាច់ខាត (៨)
+  for (let i = 0; i < 8; i++){
+    const a = ri(-30, 30);
+    out.push(numQ(`|${a}| = ?`, Math.abs(a), 'តម្លៃដាច់ខាត = ចម្ងាយពី ០'));
+  }
+
+  // ៧.៥ សមីការងាយ (១៦)
+  for (let i = 0; i < 8; i++){
+    const x = ri(-10, 15), b = ri(-20, 20);
+    out.push(numQ(`បើ x + ${b} = ${x + b} តើ x = ?`, x, `x = ${x + b} − (${b})`));
+  }
+  for (let i = 0; i < 8; i++){
+    const x = ri(2, 12), b = ri(2, 9);
+    out.push(numQ(`បើ ${b}x = ${b * x} តើ x = ?`, x, `x = ${b * x} ÷ ${b}`));
+  }
+
+  // ៧.៦ ធរណីមាត្រ (១៦)
+  for (let i = 0; i < 8; i++){
+    const l = ri(5, 20), w = ri(3, l - 1);
+    out.push(numQ(`ចតុកោណកែងបណ្តោយ ${l} ម ទទឹង ${w} ម។ ផ្ទៃក្រឡាប៉ុន្មាន?`, l * w, 'ផ្ទៃក្រឡា = បណ្តោយ × ទទឹង'));
+  }
+  for (let i = 0; i < 8; i++){
+    const s = ri(3, 15);
+    out.push(numQ(`ការ៉េជ្រុង ${s} សម។ បរិមាត្រប៉ុន្មាន?`, 4 * s, 'បរិមាត្រការ៉េ = ៤ × ជ្រុង'));
+  }
+
+  return out;
+}
+
+/* ==================== ថ្នាក់ទី៨ (៨០) ==================== */
+function G8(){
+  const out = [];
+  // ៨.១ ស្វ័យគុណ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 6), n = ri(2, 5);
+    out.push(numQ(`${a}^${n} = ?`, Math.pow(a, n), `${a} គុណខ្លួនឯង ${n} ដង`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 5), m = ri(2, 4), n = ri(2, 4);
+    out.push(numQ(`${a}^${m} × ${a}^${n} = ?`, Math.pow(a, m + n), `បូកស្វ័យគុណ: ${a}^(${m}+${n})`));
+  }
+
+  // ៨.២ ឫសការេ (១២)
+  const sq = [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289];
+  for (let i = 0; i < 12; i++){
+    const s = pick(sq);
+    out.push(numQ(`√${s} = ?`, Math.sqrt(s), `រកចំនួនដែលគុណខ្លួនឯងបាន ${s}`));
+  }
+
+  // ៨.៣ ពហុគុណ និងចែករួម (១២)
+  for (let i = 0; i < 6; i++){
+    const a = ri(2, 12), b = ri(2, 12);
+    out.push(numQ(`គ.រក.នៃ ${a} និង ${b} = ?`, gcd(a, b), 'ចែករួមធំបំផុត'));
+  }
+  for (let i = 0; i < 6; i++){
+    const a = ri(2, 10), b = ri(2, 10);
+    const lcm = a * b / gcd(a, b);
+    out.push(numQ(`ព.គ.នៃ ${a} និង ${b} = ?`, lcm, 'ពហុគុណរួមតូចបំផុត'));
+  }
+
+  // ៨.៤ សមីការលីនេអ៊ែរ (១៦)
+  for (let i = 0; i < 8; i++){
+    const x = ri(-8, 12), a = ri(2, 7), b = ri(-15, 15);
+    out.push(numQ(`បើ ${a}x + ${b} = ${a * x + b} តើ x = ?`, x, `ដក ${b} រួចចែកនឹង ${a}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const x = ri(-6, 10), a = ri(2, 6), b = ri(-10, 10), c = a * x + b;
+    out.push(numQ(`បើ ${a}x − ${-b} = ${c} តើ x = ?`, x, `ដោះស្រាយសមីការ`));
+  }
+
+  // ៨.៥ ធរណីមាត្រ (១២)
+  for (let i = 0; i < 6; i++){
+    const b = ri(4, 20) * 2, h = ri(3, 15);
+    out.push(numQ(`ត្រីកោណបាត ${b} សម កម្ពស់ ${h} សម។ ផ្ទៃក្រឡាប៉ុន្មាន?`, (b * h) / 2, 'ផ្ទៃក្រឡា = (បាត × កម្ពស់) ÷ ២'));
+  }
+  for (let i = 0; i < 6; i++){
+    const r = ri(2, 10);
+    const a = Math.round(3.14 * r * r * 100) / 100;
+    out.push(numQ(`រង្វង់កាំ ${r} សម។ ផ្ទៃក្រឡាប៉ុន្មាន? (π = 3.14)`, a, 'ផ្ទៃក្រឡា = π × កាំ²'));
+  }
+
+  // ៨.៦ ប្រភាគ (១២)
+  for (let i = 0; i < 6; i++){
+    const b = ri(2, 9), d = ri(2, 9);
+    const a = ri(1, b - 1), c = ri(1, d - 1);
+    const g = gcd(a * c, b * d);
+    const n = a * c / g, m = b * d / g;
+    out.push(mkItem(`${a}/${b} × ${c}/${d} = ?`, m === 1 ? String(n) : n + '/' + m,
+      [`${a * c}/${b * d}`, `${n + 1}/${m}`, `${n}/${m + 1}`, `${a + c}/${b + d}`],
+      'គុណភាគយកនឹងភាគយក ភាគបែងនឹងភាគបែង'));
+  }
+  for (let i = 0; i < 6; i++){
+    const b = ri(2, 9), d = ri(2, 9);
+    const a = ri(1, b - 1), c = ri(1, d - 1);
+    const g = gcd(a * d, b * c);
+    const n = a * d / g, m = b * c / g;
+    out.push(mkItem(`${a}/${b} ÷ ${c}/${d} = ?`, m === 1 ? String(n) : n + '/' + m,
+      [`${a * c}/${b * d}`, `${n + 1}/${m}`, `${n}/${m + 1}`, `${a + d}/${b + c}`],
+      'ចែក = គុណនឹងប្រភាគច្រាស'));
+  }
+
+  return out;
+}
+
+/* ==================== ថ្នាក់ទី៩ (៨០) ==================== */
+function G9(){
+  const out = [];
+  // ៩.១ សមីការដឺក្រេទី២ (២០)
+  for (let i = 0; i < 10; i++){
+    const r1 = ri(-6, 6), r2 = ri(-6, 6);
+    const b = -(r1 + r2), c = r1 * r2;
+    const ans1 = Math.min(r1, r2);
+    out.push(numQ(`ដោះស្រាយ x² + ${b}x + ${c} = 0។ តើឫសតូចជាងគេគឺ?`, ans1, `ឫសគឺ ${r1} និង ${r2}`));
+  }
+  for (let i = 0; i < 10; i++){
+    const r1 = ri(1, 6), r2 = ri(-6, -1);
+    const b = -(r1 + r2), c = r1 * r2;
+    out.push(numQ(`ដោះស្រាយ x² + ${b}x + ${c} = 0។ តើឫសធំជាងគេគឺ?`, Math.max(r1, r2), `ឫសគឺ ${r1} និង ${r2}`));
+  }
+
+  // ៩.២ អនុគមន៍ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 5), b = ri(-10, 10), x = ri(-5, 8);
+    out.push(numQ(`បើ f(x) = ${a}x + ${b} តើ f(${x}) = ?`, a * x + b, `ជំនួស x = ${x}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 3), x = ri(-4, 5);
+    out.push(numQ(`បើ f(x) = ${a}x² តើ f(${x}) = ?`, a * x * x, `ជំនួស x = ${x}`));
+  }
+
+  // ៩.៣ ធរណីមាត្រ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(3, 12), b = ri(4, 15), c = ri(5, 18);
+    out.push(numQ(`ត្រីកោណជ្រុង ${a}, ${b}, ${c} សម។ បរិមាត្រប៉ុន្មាន?`, a + b + c, 'បូកជ្រុងទាំងបី'));
+  }
+  for (let i = 0; i < 8; i++){
+    const b = ri(4, 20), h = ri(3, 12);
+    out.push(numQ(`ប៉ារ៉ាឡែលបាត ${b} ម កម្ពស់ ${h} ម។ ផ្ទៃក្រឡាប៉ុន្មាន?`, b * h, 'ផ្ទៃក្រឡា = បាត × កម្ពស់'));
+  }
+
+  // ៩.៤ ត្រីកោណមាត្រ (១៦)
+  out.push(mkItem('sin 30° = ?', '1/2', ['√3/2', '1', '1/√3'], 'sin 30° = 1/2'));
+  out.push(mkItem('cos 60° = ?', '1/2', ['√3/2', '1', '1/√3'], 'cos 60° = 1/2'));
+  out.push(mkItem('tan 45° = ?', '1', ['1/2', '√3', '1/√3'], 'tan 45° = 1'));
+  out.push(mkItem('sin 60° = ?', '√3/2', ['1/2', '1', '1/√3'], 'sin 60° = √3/2'));
+  out.push(mkItem('cos 30° = ?', '√3/2', ['1/2', '1', '1/√3'], 'cos 30° = √3/2'));
+  out.push(mkItem('tan 30° = ?', '1/√3', ['1', '√3', '1/2'], 'tan 30° = 1/√3'));
+  out.push(mkItem('sin 90° = ?', '1', ['0', '1/2', '√3/2'], 'sin 90° = 1'));
+  out.push(mkItem('cos 0° = ?', '1', ['0', '1/2', '√3/2'], 'cos 0° = 1'));
+  out.push(mkItem('តើ sin²A + cos²A = ?', '1', ['0', '2', 'sinA'], 'អត្តសញ្ញាណត្រីកោណមាត្រ'));
+  out.push(mkItem('តើ tan A = ?', 'sin A / cos A', ['cos A / sin A', '1 / sin A', '1 / cos A'], 'tan = sin/cos'));
+  out.push(mkItem('តើ sin(90° − A) = ?', 'cos A', ['sin A', '−cos A', '−sin A'], 'មុំបំពេញ'));
+  out.push(mkItem('តើ cos(90° − A) = ?', 'sin A', ['cos A', '−sin A', '−cos A'], 'មុំបំពេញ'));
+  for (let i = 0; i < 4; i++){
+    const a = ri(3, 6), b = ri(4, 8);
+    const c = Math.round(Math.sqrt(a * a + b * b) * 100) / 100;
+    out.push(numQ(`ត្រីកោណកែងជ្រុង ${a} និង ${b}។ អ៊ីប៉ូតេនុសប្រហែលប៉ុន្មាន?`, c, 'ប្រើទ្រឹស្តីបទពីតាករ'));
+  }
+
+  // ៩.៥ ចំនួន និងភាគរយ (១២)
+  for (let i = 0; i < 6; i++){
+    const n = ri(10, 100);
+    out.push(numQ(`ចំនួនណាដែលមាន ២៥% ស្មើ ${Math.round(n * 0.25)}?`, n, `x × 0.25 = ${Math.round(n * 0.25)}`));
+  }
+  for (let i = 0; i < 6; i++){
+    const n = ri(20, 200);
+    out.push(numQ(`បង្គត់ ${n} ទៅខ្ទង់ដប់`, Math.round(n / 10) * 10, 'មើលខ្ទង់រាយ'));
+  }
+
+  return out;
+}
+
+/* ==================== ថ្នាក់ទី១០ (៨០) ==================== */
+function G10(){
+  const out = [];
+  // ១០.១ លោការីត (១៦)
+  for (let i = 0; i < 8; i++){
+    const b = pick([2, 3, 5, 10]), n = ri(1, 4);
+    out.push(numQ(`log_${b}(${Math.pow(b, n)}) = ?`, n, `${b}^${n} = ${Math.pow(b, n)}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 10), b = ri(2, 10);
+    out.push(numQ(`log(${a}) + log(${b}) = log(?)`, a * b, 'log a + log b = log(ab)'));
+  }
+
+  // ១០.២ វិសមភាព (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 6), b = ri(-10, 10), x = ri(-5, 10);
+    out.push(numQ(`ដោះស្រាយ ${a}x + ${b} > ${a * x + b}។ តើ x > ?`, x, `ដក ${b} រួចចែកនឹង ${a}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(-8, -1), b = ri(-10, 10);
+    const absA = Math.abs(a);
+    out.push(mkItem(`តើចំនួនណាជាចម្លើយនៃ x² − ${a * a} < 0?`, `−${absA} < x < ${absA}`,
+      [`x > ${absA}`, `x < −${absA}`, `x = ${absA}`], 'x² < a² → −a < x < a'));
+  }
+
+  // ១០.៣ លំដាប់ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a1 = ri(1, 10), d = ri(2, 7), n = ri(5, 15);
+    out.push(numQ(`លំដាប់នព្វន្ធ a₁ = ${a1}, d = ${d}។ តើ a_${n} = ?`, a1 + (n - 1) * d, 'aₙ = a₁ + (n−1)d'));
+  }
+  for (let i = 0; i < 8; i++){
+    const a1 = ri(1, 5), r = ri(2, 3), n = ri(3, 6);
+    out.push(numQ(`លំដាប់ធរណីមាត្រ a₁ = ${a1}, r = ${r}។ តើ a_${n} = ?`, a1 * Math.pow(r, n - 1), 'aₙ = a₁ × r^(n−1)'));
+  }
+
+  // ១០.៤ ធរណីមាត្រវិភាគ (១៦)
+  for (let i = 0; i < 8; i++){
+    const x1 = ri(-5, 5), y1 = ri(-5, 5), x2 = ri(-5, 5), y2 = ri(-5, 5);
+    const d = Math.round(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) * 100) / 100;
+    out.push(numQ(`ចម្ងាយរវាង (${x1}, ${y1}) និង (${x2}, ${y2}) ប្រហែលប៉ុន្មាន?`, d, 'd = √((x₂−x₁)² + (y₂−y₁)²)'));
+  }
+  for (let i = 0; i < 8; i++){
+    const x1 = ri(-5, 5), y1 = ri(-5, 5), x2 = ri(-5, 5), y2 = ri(-5, 5);
+    if (x1 === x2){ i--; continue; }
+    const m = Math.round(((y2 - y1) / (x2 - x1)) * 100) / 100;
+    out.push(numQ(`ជម្រាលបន្ទាត់កាត់ (${x1}, ${y1}) និង (${x2}, ${y2}) = ?`, m, 'm = (y₂−y₁)/(x₂−x₁)'));
+  }
+
+  // ១០.៥ ពហុធា (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 6), b = ri(1, 5), c = ri(1, 5), d = ri(1, 5);
+    out.push(numQ(`(${a}x + ${b})(${c}x + ${d}) មានមេគុណ x² ស្មើប៉ុន្មាន?`, a * c, `មេគុណ x² = ${a} × ${c}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 8), b = ri(2, 8);
+    out.push(numQ(`(x + ${a})(x + ${b}) = x² + ?x + ${a * b}`, a + b, `មេគុណ x = ${a} + ${b}`));
+  }
+
+  return out;
+}
+
+/* ==================== ថ្នាក់ទី១១ (៨០) ==================== */
+function G11(){
+  const out = [];
+  // ១១.១ លីមីត (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 6), b = ri(-5, 10);
+    out.push(numQ(`lim(x→${a}) (${b === 0 ? '' : b + 'x + '}x²) = ?`, a * a + b * a, 'ជំនួស x = ' + a));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(2, 5);
+    out.push(numQ(`lim(x→${a}) (x² − ${a * a})/(x − ${a}) = ?`, 2 * a, 'ប្រើការបំបែកកត្តា → x + a'));
+  }
+
+  // ១១.២ ដេរីវេ (២០)
+  for (let i = 0; i < 10; i++){
+    const a = ri(2, 8), n = ri(2, 4);
+    const answer = `${a * n}x^${n - 1}`;
+    out.push(mkItem(`f(x) = ${a}x^${n}។ f'(x) = ?`, answer,
+      [`${a}x^${n - 1}`, `${a * n}x^${n}`, `${a}x^${n}`], `ដេរីវេ: ${a} × ${n} x^(${n}−1)`));
+  }
+  for (let i = 0; i < 10; i++){
+    const a = ri(2, 10), b = ri(2, 10);
+    out.push(numQ(`f(x) = ${a}x² + ${b}x។ f'(1) = ?`, 2 * a + b, `f'(x) = ${2 * a}x + ${b}`));
+  }
+
+  // ១១.៣ អាំងតេក្រាល (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 6), n = ri(1, 3);
+    const answer = `${a}/${n + 1} x^${n + 1} + C`;
+    out.push(mkItem(`∫ ${a}x^${n} dx = ?`, answer,
+      [`${a}x^${n + 1} + C`, `${a}/${n} x^${n} + C`, `${a}/${n + 1} x^${n} + C`],
+      `អាំងតេក្រាល: ${a}/(${n}+1) x^(${n}+1)`));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 10);
+    out.push(numQ(`∫₀^${a} 1 dx = ?`, a, 'អាំងតេក្រាលនៃ ១ គឺ x'));
+  }
+
+  // ១១.៤ ចំនួនកុំផ្លិច (១៦)
+  out.push(mkItem('i² = ?', '−1', ['1', '−i', 'i'], 'i = √(−1) → i² = −1'));
+  out.push(mkItem('(2 + 3i) + (4 − i) = ?', '6 + 2i', ['6 + 4i', '2 + 2i', '6 − 2i'], 'បូកផ្នែកពិត និងផ្នែកនិម្មិត'));
+  out.push(mkItem('(1 + i)(1 − i) = ?', '2', ['0', '1', '1 + i'], 'a² + b² = 1 + 1 = 2'));
+  for (let i = 0; i < 13; i++){
+    const a = ri(1, 6), b = ri(1, 6);
+    out.push(numQ(`|${a} + ${b}i| = ? (ប្រហែល)`, Math.round(Math.sqrt(a * a + b * b) * 100) / 100, '|z| = √(a² + b²)'));
+  }
+
+  // ១១.៥ ស្ថិតិ (១២)
+  for (let i = 0; i < 6; i++){
+    const k = ri(4, 6);
+    const nums = [];
+    let s = 0;
+    for (let j = 0; j < k; j++){ const v = ri(2, 20); nums.push(v); s += v; }
+    const avg = Math.round((s / k) * 100) / 100;
+    out.push(numQ(`មធ្យមនៃ ${nums.join(', ')} = ?`, avg, 'បូកទាំងអស់ រួចចែកនឹង ' + k));
+  }
+  for (let i = 0; i < 6; i++){
+    const k = ri(5, 7);
+    const nums = [];
+    for (let j = 0; j < k; j++) nums.push(ri(1, 20));
+    nums.sort((a, b) => a - b);
+    const median = nums[Math.floor(k / 2)];
+    out.push(numQ(`មេដ្យាននៃ ${nums.join(', ')} = ?`, median, 'រៀបតាមលំដាប់ រួចយកតម្លៃកណ្តាល'));
+  }
+
+  return out;
+}
+
+/* ==================== ថ្នាក់ទី១២ (៨០) ==================== */
+function G12(){
+  const out = [];
+  // ១២.១ លីមីតកម្រិតខ្ពស់ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 5), b = ri(1, 5);
+    out.push(numQ(`lim(x→∞) (${a}x² + ${b}x)/(x² + 1) = ?`, a, 'ចែកនឹង x² នាំមុខ'));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 4), b = ri(1, 6);
+    out.push(numQ(`lim(x→0) sin(${a}x)/(${b}x) = ?`, a / b, 'lim sin(ax)/(bx) = a/b'));
+  }
+
+  // ១២.២ ដេរីវេកម្រិតខ្ពស់ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 6);
+    out.push(mkItem(`f(x) = sin(${a}x)។ f'(x) = ?`, `${a}cos(${a}x)`,
+      [`cos(${a}x)`, `${a}sin(${a}x)`, `−${a}cos(${a}x)`], 'ដេរីវេ sin(ax) = a cos(ax)'));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 6);
+    out.push(mkItem(`f(x) = e^(${a}x)។ f'(x) = ?`, `${a}e^(${a}x)`,
+      [`e^(${a}x)`, `${a}e^(${a - 1}x)`, `−${a}e^(${a}x)`], 'ដេរីវេ e^(ax) = a e^(ax)'));
+  }
+
+  // ១២.៣ អាំងតេក្រាលកម្រិតខ្ពស់ (១៦)
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 5);
+    out.push(mkItem(`∫ cos(${a}x) dx = ?`, `(1/${a})sin(${a}x) + C`,
+      [`sin(${a}x) + C`, `(1/${a})cos(${a}x) + C`, `−(1/${a})sin(${a}x) + C`],
+      'អាំងតេក្រាល cos(ax) = (1/a)sin(ax)'));
+  }
+  for (let i = 0; i < 8; i++){
+    const a = ri(1, 5);
+    out.push(mkItem(`∫ e^(${a}x) dx = ?`, `(1/${a})e^(${a}x) + C`,
+      [`e^(${a}x) + C`, `(1/${a})e^(${a - 1}x) + C`, `−(1/${a})e^(${a}x) + C`],
+      'អាំងតេក្រាល e^(ax) = (1/a)e^(ax)'));
+  }
+
+  // ១២.៤ ប្រូបាប៊ីលីតេ (១៦)
+  for (let i = 0; i < 8; i++){
+    const n = ri(4, 10), k = ri(1, 3);
+    const prob = Math.round((k / n) * 1000) / 1000;
+    out.push(numQ(`ថង់មួយមានបាល់ ${n} គ្រាប់ ក្នុងនោះ ${k} គ្រាប់ពណ៌ក្រហម។ ប្រូបាប៊ីលីតេទាញបានបាល់ក្រហម? (ប្រហែល)`, prob, `P = ${k}/${n}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const n = ri(2, 6);
+    out.push(numQ(`ទម្លាក់កាក់ ${n} ដង។ ចំនួនលទ្ធផលសរុប = ?`, Math.pow(2, n), `2^${n}`));
+  }
+
+  // ១២.៥ សមីការអិចស្ប៉ូណង់ស្យែល និងលោការីត (១៦)
+  for (let i = 0; i < 8; i++){
+    const b = pick([2, 3, 5]), n = ri(2, 4);
+    out.push(numQ(`ដោះស្រាយ ${b}^x = ${Math.pow(b, n)}`, n, `${b}^${n} = ${Math.pow(b, n)}`));
+  }
+  for (let i = 0; i < 8; i++){
+    const b = pick([2, 3, 10]), n = ri(1, 4);
+    out.push(numQ(`ដោះស្រាយ log_${b}(x) = ${n}`, Math.pow(b, n), `x = ${b}^${n}`));
+  }
+
+  return out;
+}
+
+/* ==================== ទិន្នន័យសរុប ==================== */
+const DATA = [
+  { id:'g7',  title:'ថ្នាក់ទី៧ (៨០ លំហាត់)',  desc:'ចំនួនគត់ ភាគរយ សមាមាត្រ តម្លៃដាច់ខាត សមីការងាយ និងធរណីមាត្រ។', items: G7() },
+  { id:'g8',  title:'ថ្នាក់ទី៨ (៨០ លំហាត់)',  desc:'ស្វ័យគុណ ឫសការេ គ.រក. ព.គ. សមីការលីនេអ៊ែរ ធរណីមាត្រ និងប្រភាគ។', items: G8() },
+  { id:'g9',  title:'ថ្នាក់ទី៩ (៨០ លំហាត់)',  desc:'សមីការដឺក្រេទី២ អនុគមន៍ ធរណីមាត្រ ត្រីកោណមាត្រ និងភាគរយ។', items: G9() },
+  { id:'g10', title:'ថ្នាក់ទី១០ (៨០ លំហាត់)', desc:'លោការីត វិសមភាព លំដាប់ ធរណីមាត្រវិភាគ និងពហុធា។', items: G10() },
+  { id:'g11', title:'ថ្នាក់ទី១១ (៨០ លំហាត់)', desc:'លីមីត ដេរីវេ អាំងតេក្រាល ចំនួនកុំផ្លិច និងស្ថិតិ។', items: G11() },
+  { id:'g12', title:'ថ្នាក់ទី១២ (៨០ លំហាត់)', desc:'លីមីតកម្រិតខ្ពស់ ដេរីវេ អាំងតេក្រាល ប្រូបាប៊ីលីតេ និងសមីការអិចស្ប៉ូណង់ស្យែល។', items: G12() }
+];
+
+/* ==================== ការបង្ហាញ ==================== */
+const app = document.getElementById('app');
+const scoreEl = document.getElementById('score');
+const totalEl = document.getElementById('total');
+const navEl = document.getElementById('secnav');
+let correctCount = 0;
+
+function render(){
+  correctCount = 0;
+  scoreEl.textContent = km(0);
+
+  let html = '';
+  let n = 0;
+
+  DATA.forEach(sec => {
+    html += '<section class="section" id="' + sec.id + '">';
+    html += '<h2>' + sec.title + '</h2>';
+    html += '<p class="desc">' + sec.desc + '</p>';
+
+    sec.items.forEach(it => {
+      n++;
+      html += '<div class="q">';
+      html += '<div class="qtext"><span class="num">' + km(n) + '.</span> ' + km(it.q) + '</div>';
+      html += '<div class="opts">';
+      it.o.forEach((txt, i) => {
+        html += '<button class="opt" data-i="' + i + '" data-a="' + it.a + '">'
+              + LETTERS[i] + '. ' + km(txt) + '</button>';
+      });
+      html += '</div>';
+      let ansHtml = 'ចម្លើយត្រឹមត្រូវ៖ ' + LETTERS[it.a] + '. ' + km(it.o[it.a]);
+      if (it.ex){
+        ansHtml += '<br><span style="font-weight:400;color:#4a5a72;font-size:13.5px">' + km(it.ex) + '</span>';
+      }
+      html += '<div class="ans">' + ansHtml + '</div>';
+      html += '</div>';
+    });
+
+    html += '</section>';
+  });
+
+  app.innerHTML = html;
+  totalEl.textContent = km(n);
+
+  navEl.innerHTML = DATA.map((s, i) =>
+    '<a href="#' + s.id + '">' + s.title.replace(/\s*\(.*\)$/, '') + '</a>'
+  ).join('');
+}
+
+/* ចុចជម្រើស */
+app.addEventListener('click', e => {
+  const btn = e.target.closest('.opt');
+  if (!btn || btn.disabled) return;
+
+  const qEl = btn.closest('.q');
+  const opts = qEl.querySelectorAll('.opt');
+  const ansEl = qEl.querySelector('.ans');
+  const chosen = +btn.dataset.i;
+  const correct = +btn.dataset.a;
+
+  if (chosen === correct){
+    btn.classList.add('correct');
+    opts.forEach(b => b.disabled = true);
+    ansEl.classList.add('show');
+    correctCount++;
+    scoreEl.textContent = km(correctCount);
+  } else {
+    btn.classList.add('wrong');
+    btn.disabled = true;
+  }
+});
+
+/* ប៊ូតុង */
+document.getElementById('btnShowAll').addEventListener('click', () => {
+  document.querySelectorAll('.q').forEach(qEl => {
+    qEl.querySelectorAll('.opt').forEach(b => {
+      if (+b.dataset.i === +b.dataset.a){
+        b.classList.add('correct');
+      }
+      b.disabled = true;
+    });
+    qEl.querySelector('.ans').classList.add('show');
+  });
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('btnPrint').addEventListener('click', () => {
+  document.body.classList.remove('print-answers');
+  window.print();
+});
+
+document.getElementById('btnPrintAns').addEventListener('click', () => {
+  document.body.classList.add('print-answers');
+  window.print();
+});
+
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('print-answers');
+});
+
+/* ចាប់ផ្តើម */
+render();
+</script>
+</body>
+</html>
